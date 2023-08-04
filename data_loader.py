@@ -6,14 +6,20 @@ path = "./data/"
 
 
 class MyDataset(Dataset):
-    def __init__(self):
+    def __init__(self, data, target):
+        self.data = data
+        self.target = target
+
         super.__init__()
 
-    def __len__():
-        pass
+    def __len__(self):
+        return self.data.size(0)
 
     def __getitem__(self, index):
-        pass
+        x = self.data[index]
+        y = self.target[index]
+
+        return x, y
     
 
 def load_data(flatten=False):
@@ -48,6 +54,13 @@ def get_loaders(config):
 
     train_loader = DataLoader(
         dataset=MyDataset(train_X, train_y), 
-        batch_size=config.batch_size,
+        batch_size=config.batch_size, 
         shuffle=True
     )
+    valid_loader = DataLoader(
+        dataset=MyDataset(valid_X, valid_y), 
+        batch_size=config.batch_size, 
+        shuffle=False
+    )
+
+    return train_loader, valid_loader
