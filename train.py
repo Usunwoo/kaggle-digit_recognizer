@@ -36,6 +36,9 @@ def main(config):
     trainer = Trainer(model, optimizer, crit, device)
     trainer.train(train_loader, valid_loader, config)
 
+    torch.save({'model' : trainer.model.state_dict(), 'config' : config}
+                , config.model_fn)
+
 if __name__ == '__main__':
     config = define_argparser()
     main(config)

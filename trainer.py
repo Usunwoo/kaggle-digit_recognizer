@@ -53,8 +53,6 @@ class Trainer():
         return valid_loss / len(x)
 
     def train(self, train_loader, valid_loader, config):
-        train_history, valid_history = [], []
-
         best_model = None
         lowest_loss = np.inf
 
@@ -73,9 +71,6 @@ class Trainer():
                 x, y = x.to(self.device), y.to(self.device)
                 valid_loss += self._valid(x, y, config)
             valid_loss /= len(valid_loader)
-
-            train_history.append(train_loss)
-            valid_history.append(valid_loss)
 
             if valid_loss <= lowest_loss:
                 lowest_loss = valid_loss
