@@ -37,7 +37,7 @@ def main(config):
 
     train_loader, valid_loader = get_loaders(config)
     
-    # model = CNNClassifier(10).to(device)
+    model = CNNClassifier(10).to(device)
     # model = RNNClassifier(
     #     input_size=28,
     #     hidden_size=config.hidden_size, 
@@ -45,13 +45,13 @@ def main(config):
     #     n_layers=config.n_layers,
     #     dropout_p=config.dropout_p
     # ).to(device)
-    model = LSTMClassifier(
-        input_size=28,
-        hidden_size=config.hidden_size, 
-        output_size=10,
-        n_layers=config.n_layers,
-        dropout_p=config.dropout_p
-    ).to(device)
+    # model = LSTMClassifier(
+    #     input_size=28,
+    #     hidden_size=config.hidden_size, 
+    #     output_size=10,
+    #     n_layers=config.n_layers,
+    #     dropout_p=config.dropout_p
+    # ).to(device)
     optimizer = optim.Adam(model.parameters())
     crit = nn.NLLLoss()
 
