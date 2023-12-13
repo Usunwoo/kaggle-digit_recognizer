@@ -1,4 +1,4 @@
-from torch import nn
+import torch.nn as nn
 
 class DNN(nn.Module):
     def __init__(self):
