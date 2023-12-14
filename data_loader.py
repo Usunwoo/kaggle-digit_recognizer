@@ -54,7 +54,7 @@ def get_loaders(batch_size, custom_data = False):
                             transform=transforms.ToTensor(),
                             download=True)
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=1)
+    valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=False, num_workers=1)
 
     return train_loader, valid_loader
