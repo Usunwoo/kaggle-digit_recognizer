@@ -1,45 +1,17 @@
-# from torch import nn
+import torch
+from torch import nn
 
+class RNN(nn.Module):
+    def __init__(self, input_size=28, hidden_size=128, num_layers=1, num_classes=10):
+        super(RNN, self).__init__()
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.rnn = nn.RNN(input_size, hidden_size, num_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_size, num_classes)
 
-# class RNNClassifier(nn.Module):
-    
-#     def __init__(
-#             self, 
-#             input_size,
-#             hidden_size,
-#             output_size,
-#             n_layers=4,
-#             dropout_p=0.2,
-#     ):
-#         super().__init__()
-
-#         self.input_size = input_size
-#         self.hidden_size = hidden_size
-#         self.output_size = output_size
-#         self.n_layers = n_layers
-#         self.dropout_p = dropout_p
-
-#         self.rnn = nn.RNN(
-#             input_size=input_size,
-#             hidden_size=hidden_size,
-#             num_layers=n_layers,
-#             batch_first=True,
-#             dropout=dropout_p,
-#             bidirectional=True,
-#         )
-
-#         self.layers = nn.Sequential(
-#             nn.ReLU(),
-#             nn.BatchNorm1d(hidden_size * 2),
-#             nn.Linear(hidden_size * 2, output_size),
-#             nn.LogSoftmax(dim=-1),
-#         )
-
-#     def forward(self, x):
-#         z, _ = self.rnn(x)
-
-#         z = z[:, -1]
-
-#         y = self.layers(z)
-
-#         return y
+    def forward(self, x):
+        h_0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
+        output, _ = self.rnn(x, h_0) # output = batch_size * sequence_length * hidden_size
+        output = output[:, -1, :] # 맨 마지막 sequance의 hidden_size만 가져옴
+        output = self.fc(output)
+        return output
