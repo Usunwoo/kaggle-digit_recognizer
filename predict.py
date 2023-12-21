@@ -20,7 +20,9 @@ def main():
 
     test_X = load_data().to(device).reshape(-1, 28, 28)
     # model_fn = './model_files/model_DNN.pth'
-    model_fn = './model_files/model_CNN.pth'
+    # model_fn = './model_files/model_CNN.pth'
+    # model_fn = './model_files/model_RNN.pth'
+    model_fn = './model_files/model_LSTM.pth'
     model = torch.load(model_fn)
 
     pred = test(model, test_X)
@@ -30,7 +32,10 @@ def main():
         "Label": torch.argmax(pred, dim=-1).cpu().numpy()
     })
     # pred_df.to_csv('./submissions/DNN.csv', index=False)
-    pred_df.to_csv('./submissions/CNN.csv', index=False)
+    # pred_df.to_csv('./submissions/CNN.csv', index=False)
+    # pred_df.to_csv('./submissions/RNN.csv', index=False)
+    pred_df.to_csv('./submissions/LSTM.csv', index=False)
+    # pred_df.to_csv('./submissions/Custom_VanillaLSTM.csv', index=False)
     print("done.")
 
 if __name__ == '__main__':
